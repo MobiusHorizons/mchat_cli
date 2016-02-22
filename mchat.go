@@ -17,7 +17,7 @@ func main() {
 
 	fmt.Println(flag.Args())
 	if flag.NArg() < 1 {
-		fmt.Fprintf(os.Stderr, "Usage: %s recipient\n", os.Args[0])
+		fmt.Fprintf(os.Stderr, "Usage: %s --nick <nickname> [--server mqtt(s)://server.tld:port ] recipient\n", os.Args[0])
 		os.Exit(1)
 	}
 
@@ -32,8 +32,8 @@ func main() {
 
 	go func() {
 		m := client.Listen()
-		for m != "" {
-			fmt.Println(m)
+		for m != nil {
+			fmt.Println(m.From + ": " + m.Message)
 			m = client.Listen()
 		}
 		fmt.Println("channel closed")
